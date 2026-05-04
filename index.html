@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI FAQ Chatbot</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-shell">
+    <div class="orb orb-violet"></div>
+    <div class="orb orb-teal"></div>
+
+    <main class="chat-app">
+      <header class="chat-header">
+        <div>
+          <p class="eyebrow">NLP FAQ Assistant</p>
+          <h1>AI FAQ Chatbot</h1>
+          <p class="subtitle">Similarity-based answers powered by preprocessing and cosine matching.</p>
+        </div>
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          Online
+        </div>
+      </header>
+
+      <section id="chatBox" class="chat-box" aria-live="polite">
+        <article class="message-row bot-row">
+          <div class="avatar">AI</div>
+          <div class="message bot">
+            Hello! Ask me about AI, machine learning, pricing, support, integrations, security, or our services.
+          </div>
+        </article>
+      </section>
+
+      <form class="input-panel" id="chatForm">
+        <label class="sr-only" for="userInput">Ask a question</label>
+        <input
+          type="text"
+          id="userInput"
+          placeholder="Ask a question about our FAQ knowledge base..."
+          autocomplete="off"
+        >
+        <button type="submit" id="sendButton">Send</button>
+      </form>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
