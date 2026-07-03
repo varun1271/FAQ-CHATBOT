@@ -3,69 +3,98 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CodeGPT - Specialized Coding Assistant</title>
+  <title>CodeGPT - Your Personal AI Coding Assistant</title>
   <link rel="stylesheet" href="style.css">
-  <!-- Markdown Parser -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <!-- Syntax Highlighting -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-  <!-- Font Awesome for icons -->
+  <!-- Fonts & Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Markdown & Highlight -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/tokyo-night-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 </head>
-<body>
-  <div class="app-container">
-    <aside class="sidebar" id="sidebar">
-      <button class="new-chat-btn" id="newChatBtn">
-        <i class="fas fa-plus"></i> New Chat
+<body class="dark-theme">
+  <div id="toast-container"></div>
+
+  <nav class="navbar">
+    <div class="logo">CodeGPT</div>
+    <div class="nav-actions">
+      <button id="themeToggle" class="icon-btn" title="Toggle Theme">
+        <i class="fas fa-sun"></i>
       </button>
-      <div class="chat-history">
-        <p class="history-label">Recent</p>
-        <ul id="historyList">
-          <li class="history-item active"><i class="far fa-message"></i> Python Loop Help</li>
-        </ul>
-      </div>
-      <div class="sidebar-footer">
-        <div class="user-profile">
-          <div class="avatar-small">U</div>
-          <span>User Name</span>
-        </div>
-      </div>
-    </aside>
+      <button id="historyBtn" class="icon-btn" title="Search History">
+        <i class="fas fa-history"></i>
+      </button>
+    </div>
+  </nav>
 
-    <main class="chat-main">
-      <header class="top-bar">
-        <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
-        <div class="model-info">CodeGPT 4.0 <i class="fas fa-chevron-down"></i></div>
-        <div class="top-actions">
-          <i class="far fa-share-from-square"></i>
-        </div>
-      </header>
+  <main class="container" id="landingPage">
+    <header class="hero">
+      <h1 class="logo-large">CodeGPT</h1>
+      <p class="tagline">Your Personal AI Coding Assistant</p>
+    </header>
 
-      <section id="chatBox" class="chat-box">
-        <article class="message-row assistant-row">
-          <div class="avatar"><i class="fas fa-robot"></i></div>
-          <div class="message assistant">
-            Hello! I'm CodeGPT, your specialized assistant for **Python**, **Java**, **C**, and **C++**. How can I help you code today?
+    <div class="feature-grid">
+      <!-- Learn Coding Card -->
+      <section class="card glass" id="learnCard">
+        <div class="card-icon"><i class="fas fa-graduation-cap"></i></div>
+        <h2>Learn Coding</h2>
+        <p>Learn any programming topic instantly.</p>
+        <div class="search-box-container">
+          <div class="input-group glass">
+            <input type="text" id="learnInput" placeholder="/loops, /python, /functions..." autocomplete="off">
+            <button id="learnSubmit"><i class="fas fa-arrow-right"></i></button>
           </div>
-        </article>
+          <div id="autocompleteSuggestions" class="suggestions-box hidden"></div>
+        </div>
+        <p class="hint">Use "/" to start. Example: <code>/python</code></p>
       </section>
 
-      <div class="input-container">
-        <form id="chatForm" class="input-panel">
-          <textarea
-            id="userInput"
-            placeholder="Message CodeGPT..."
-            rows="1"
-            autocomplete="off"
-          ></textarea>
-          <button type="submit" id="sendButton" disabled>
-            <i class="fas fa-arrow-up"></i>
-          </button>
-        </form>
-        <p class="disclaimer">CodeGPT can make mistakes. Check important info.</p>
+      <!-- Fix My Code Card -->
+      <section class="card glass" id="fixCard">
+        <div class="card-icon"><i class="fas fa-bug"></i></div>
+        <h2>Fix My Code</h2>
+        <div class="fix-container">
+          <select id="fixLanguage" class="glass">
+            <option value="python">Python</option>
+            <option value="java">Java</option>
+            <option value="c">C</option>
+            <option value="cpp">C++</option>
+          </select>
+          <textarea id="fixCodeInput" placeholder="Paste your code here..." class="glass"></textarea>
+          <button id="fixSubmit" class="btn-primary">Fix Code</button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Response Section -->
+  <section id="responsePage" class="container hidden">
+    <button id="backBtn" class="btn-text"><i class="fas fa-chevron-left"></i> Back to Tools</button>
+    <div id="responseContent" class="glass-heavy">
+      <!-- AI response will be injected here -->
+    </div>
+    <div class="response-actions">
+      <button id="copyAllBtn" class="btn-secondary"><i class="far fa-copy"></i> Copy All</button>
+      <button id="downloadBtn" class="btn-secondary"><i class="fas fa-download"></i> Download</button>
+    </div>
+  </section>
+
+  <!-- History Sidebar/Modal -->
+  <div id="historyModal" class="modal hidden">
+    <div class="modal-content glass">
+      <div class="modal-header">
+        <h3>Recent Activity</h3>
+        <button id="closeHistory" class="icon-btn"><i class="fas fa-times"></i></button>
       </div>
-    </main>
+      <div id="historyList"></div>
+    </div>
+  </div>
+
+  <!-- Loading Animation -->
+  <div id="loadingOverlay" class="hidden">
+    <div class="spinner"></div>
+    <p>CodeGPT is thinking...</p>
   </div>
 
   <script src="script.js"></script>
