@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CodeGPT - Your Personal AI Coding Assistant</title>
-  <link rel="stylesheet" href="style.css">
   <!-- Fonts & Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
@@ -12,6 +11,8 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/tokyo-night-dark.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-theme">
   <div id="toast-container"></div>
@@ -19,12 +20,8 @@
   <nav class="navbar">
     <div class="logo">CodeGPT</div>
     <div class="nav-actions">
-      <button id="themeToggle" class="icon-btn" title="Toggle Theme">
-        <i class="fas fa-sun"></i>
-      </button>
-      <button id="historyBtn" class="icon-btn" title="Search History">
-        <i class="fas fa-history"></i>
-      </button>
+      <button id="themeToggle" class="icon-btn" title="Toggle Theme"><i class="fas fa-sun"></i></button>
+      <button id="historyBtn" class="icon-btn" title="Search History"><i class="fas fa-history"></i></button>
     </div>
   </nav>
 
@@ -35,66 +32,54 @@
     </header>
 
     <div class="feature-grid">
-      <!-- Learn Coding Card -->
       <section class="card glass" id="learnCard">
         <div class="card-icon"><i class="fas fa-graduation-cap"></i></div>
         <h2>Learn Coding</h2>
-        <p>Learn any programming topic instantly.</p>
-        <div class="search-box-container">
-          <div class="input-group glass">
+        <p style="color: var(--text-secondary); font-size: 1.2rem;">Learn any programming topic instantly.</p>
+        <div style="position: relative;">
+          <div class="input-group">
             <input type="text" id="learnInput" placeholder="/loops, /python, /functions..." autocomplete="off">
-            <button id="learnSubmit"><i class="fas fa-arrow-right"></i></button>
+            <button id="learnSubmit" style="background:none; border:none; color:var(--accent-color); cursor:pointer; font-size: 1.2rem;"><i class="fas fa-arrow-right"></i></button>
           </div>
           <div id="autocompleteSuggestions" class="suggestions-box hidden"></div>
         </div>
-        <p class="hint">Use "/" to start. Example: <code>/python</code></p>
+        <p style="font-size: 0.9rem; color: var(--text-secondary);">Use "/" to start. Example: <code style="color:var(--accent-color); background:rgba(0,0,0,0.3); padding:0.2rem 0.4rem; border-radius:4px;">/python</code></p>
       </section>
 
-      <!-- Fix My Code Card -->
       <section class="card glass" id="fixCard">
         <div class="card-icon"><i class="fas fa-bug"></i></div>
         <h2>Fix My Code</h2>
-        <div class="fix-container">
-          <select id="fixLanguage" class="glass">
-            <option value="python">Python</option>
-            <option value="java">Java</option>
-            <option value="c">C</option>
-            <option value="cpp">C++</option>
-          </select>
-          <textarea id="fixCodeInput" placeholder="Paste your code here..." class="glass"></textarea>
+        <div style="display:flex; flex-direction:column; gap:1.5rem;">
+          <select id="fixLanguage" class="glass" style="padding:0.8rem; border-radius:12px; background:rgba(0,0,0,0.2); color:var(--text-primary); border:1px solid var(--border-color); font-size: 1rem; cursor: pointer;"></select>
+          <textarea id="fixCodeInput" placeholder="Paste your code here..." style="font-family: 'Fira Code', monospace;"></textarea>
           <button id="fixSubmit" class="btn-primary">Fix Code</button>
         </div>
       </section>
     </div>
   </main>
 
-  <!-- Response Section -->
   <section id="responsePage" class="container hidden">
-    <button id="backBtn" class="btn-text"><i class="fas fa-chevron-left"></i> Back to Tools</button>
-    <div id="responseContent" class="glass-heavy">
-      <!-- AI response will be injected here -->
-    </div>
+    <button id="backBtn" class="btn-secondary" style="margin-bottom:2rem;"><i class="fas fa-chevron-left"></i> Back to Tools</button>
+    <div id="responseContent" class="glass-heavy"></div>
     <div class="response-actions">
       <button id="copyAllBtn" class="btn-secondary"><i class="far fa-copy"></i> Copy All</button>
       <button id="downloadBtn" class="btn-secondary"><i class="fas fa-download"></i> Download</button>
     </div>
   </section>
 
-  <!-- History Sidebar/Modal -->
   <div id="historyModal" class="modal hidden">
-    <div class="modal-content glass">
+    <div class="modal-content glass-heavy">
       <div class="modal-header">
         <h3>Recent Activity</h3>
         <button id="closeHistory" class="icon-btn"><i class="fas fa-times"></i></button>
       </div>
-      <div id="historyList"></div>
+      <div id="historyList" style="max-height: 400px; overflow-y: auto;"></div>
     </div>
   </div>
 
-  <!-- Loading Animation -->
   <div id="loadingOverlay" class="hidden">
     <div class="spinner"></div>
-    <p>CodeGPT is thinking...</p>
+    <p style="font-size: 1.2rem; font-weight: 500;">CodeGPT is thinking...</p>
   </div>
 
   <script src="script.js"></script>
